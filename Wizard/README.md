@@ -121,8 +121,14 @@ namespace Wizard
 <br/><br/>
 
 #### Usage
-To add a MonoBehaviour to a `GameObject` use one of the extension methods.
-
+To add a MonoBehaviour to a `GameObject` use one of the extension methods. 
+<br><br>
+**Order of precedence is:**
+- Is the custom `MonoBehaviour` type already defined by Valheim or the plug-in?
+   - Yes, use it
+   - No, look in the `MonoBehaviourRepository`
+   - otherwise an `ArgumentException` is thrown
+<br><br>
 ###### Example
 ``` C#
         private void LoadAssets()
