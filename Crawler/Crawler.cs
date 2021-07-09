@@ -15,6 +15,7 @@ namespace Crawler
         private Harmony _harmony;
         private static GameObject Nasty;
         private AssetBundle nasty;
+        private static GameObject NastySpawner;
 
         private void Awake()
         {
@@ -29,6 +30,7 @@ namespace Crawler
                 return;
             }
             zNetScene.m_prefabs.Add(Nasty);
+            zNetScene.m_prefabs.Add(NastySpawner);
 
         }
         private static AssetBundle GetAssetBundleFromResources(string filename)
@@ -48,6 +50,8 @@ namespace Crawler
             nasty = GetAssetBundleFromResources("nasty");
             Debug.Log("Loading Nasty Crawler");
             Nasty = nasty.LoadAsset<GameObject>("TheNasty");
+            Debug.Log("Loading Nasty Cocoons");
+            NastySpawner = nasty.LoadAsset<GameObject>("Nasty_Spawner");
             nasty?.Unload(false);
 
         }

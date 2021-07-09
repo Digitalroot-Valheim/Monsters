@@ -15,7 +15,8 @@ namespace YetiMonsterZ
         private Harmony _harmony;
 
         private static GameObject Yeti;
-
+        private static GameObject cape;
+        private static GameObject pelt;
         private AssetBundle yetiboy;
 
 
@@ -33,8 +34,33 @@ namespace YetiMonsterZ
             }
 
             zNetScene.m_prefabs.Add(Yeti);
+            zNetScene.m_prefabs.Add(cape);
+            zNetScene.m_prefabs.Add(pelt);
 
 
+        }
+        public static void RegisterItems()
+        {
+            if (ObjectDB.instance.m_items.Count == 0 || ObjectDB.instance.GetItemPrefab("Amber") == null)
+            {
+                Debug.Log("Waiting for game to initialize before adding prefabs.");
+                return;
+            }
+            var itemDrop = cape.GetComponent<ItemDrop>();
+            if (itemDrop != null)
+            {
+                if (ObjectDB.instance.GetItemPrefab(cape.name.GetStableHashCode()) == null)
+                {
+                    Debug.Log("Loading ItemDrops For YetiBoy");
+                    ObjectDB.instance.m_items.Add(cape);
+                    ObjectDB.instance.m_items.Add(pelt);
+                   
+                }
+            }
+            if (itemDrop == null)
+            {
+                Debug.Log("You BEE fuckin up, this kills me");
+            }
         }
         private static AssetBundle GetAssetBundleFromResources(string filename)
         {
@@ -53,6 +79,10 @@ namespace YetiMonsterZ
             yetiboy = GetAssetBundleFromResources("yetiboy");
             Debug.Log("Loading Yeti");
             Yeti = yetiboy.LoadAsset<GameObject>("Yeti");
+            Debug.Log("Loading Yeti Cape");
+            cape = yetiboy.LoadAsset<GameObject>("CapeYeti");
+            Debug.Log("Loading Yeti Pelt");
+            pelt = yetiboy.LoadAsset<GameObject>("YetiPelt");
 
             yetiboy?.Unload(false);
 
@@ -70,7 +100,24 @@ namespace YetiMonsterZ
                 return true;
             }
         }
-
+        [HarmonyPatch(typeof(ObjectDB), "Awake")]
+        public static class ObjectDB_Awake_Patch
+        {
+            public static void Postfix()
+            {
+                Debug.Log("Trying to register Items");
+                RegisterItems();
+            }
+        }
+        [HarmonyPatch(typeof(ObjectDB), "CopyOtherDB")]
+        public static class ObjectDB_CopyOtherDB_Patch
+        {
+            public static void Postfix()
+            {
+                Debug.Log("Trying to register Items");
+                RegisterItems();
+            }
+        }
         private void OnDestroy()
         {
             _harmony?.UnpatchSelf();

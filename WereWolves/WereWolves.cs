@@ -19,6 +19,8 @@ namespace WhereWolves
         private AssetBundle werewolf;
         private static GameObject WereWolf4;
         private static GameObject WereWolf5;
+        private static GameObject Cape1;
+
 
         private void Awake()
         {
@@ -37,6 +39,30 @@ namespace WhereWolves
             zNetScene.m_prefabs.Add(WereWolf3);
             zNetScene.m_prefabs.Add(WereWolf4);
             zNetScene.m_prefabs.Add(WereWolf5);
+            zNetScene.m_prefabs.Add(Cape1);
+        }
+
+        public static void RegisterItems()
+        {
+            if (ObjectDB.instance.m_items.Count == 0 || ObjectDB.instance.GetItemPrefab("Amber") == null)
+            {
+                Debug.Log("Waiting for game to initialize before adding prefabs.");
+                return;
+            }
+            var itemDrop = Cape1.GetComponent<ItemDrop>();
+            if (itemDrop != null)
+            {
+                if (ObjectDB.instance.GetItemPrefab(Cape1.name.GetStableHashCode()) == null)
+                {
+                    Debug.Log("Loading ItemDrops For YetiBoy");
+                    ObjectDB.instance.m_items.Add(Cape1);
+
+                }
+            }
+            if (itemDrop == null)
+            {
+                Debug.Log("You BEE fuckin up, this kills me");
+            }
         }
         private static AssetBundle GetAssetBundleFromResources(string filename)
         {
@@ -62,6 +88,8 @@ namespace WhereWolves
             WereWolf4 = werewolf.LoadAsset<GameObject>("WereWolfBrown");
             Debug.Log("Loading Wolf5");
             WereWolf5 = werewolf.LoadAsset<GameObject>("WereWolfWhite");
+            Debug.Log("Loading Cape 1");
+            Cape1 = werewolf.LoadAsset<GameObject>("WerewolfCape");
             
             werewolf?.Unload(false);
             
@@ -79,7 +107,24 @@ namespace WhereWolves
                 return true;
             }
         }
-
+        [HarmonyPatch(typeof(ObjectDB), "Awake")]
+        public static class ObjectDB_Awake_Patch
+        {
+            public static void Postfix()
+            {
+                Debug.Log("Trying to register Items");
+                RegisterItems();
+            }
+        }
+        [HarmonyPatch(typeof(ObjectDB), "CopyOtherDB")]
+        public static class ObjectDB_CopyOtherDB_Patch
+        {
+            public static void Postfix()
+            {
+                Debug.Log("Trying to register Items");
+                RegisterItems();
+            }
+        }
         private void OnDestroy()
         {
             _harmony?.UnpatchSelf();

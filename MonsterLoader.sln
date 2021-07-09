@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crawler", "Crawler\Crawler.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Golem", "Golem\Golem.csproj", "{7B15F774-35F8-40BC-A001-50CC85EB46F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reaper", "Reaper\Reaper.csproj", "{5F53135D-FB41-47AE-980A-53A587EABE7C}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoBehaviourRepository", "MonoBehaviourRepository\MonoBehaviourRepository.csproj", "{2CE90835-7B35-431C-9267-5C42DB402377}"
 EndProject
 Global
@@ -58,6 +60,10 @@ Global
 		{7B15F774-35F8-40BC-A001-50CC85EB46F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B15F774-35F8-40BC-A001-50CC85EB46F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B15F774-35F8-40BC-A001-50CC85EB46F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F53135D-FB41-47AE-980A-53A587EABE7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F53135D-FB41-47AE-980A-53A587EABE7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F53135D-FB41-47AE-980A-53A587EABE7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F53135D-FB41-47AE-980A-53A587EABE7C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2CE90835-7B35-431C-9267-5C42DB402377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2CE90835-7B35-431C-9267-5C42DB402377}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CE90835-7B35-431C-9267-5C42DB402377}.Release|Any CPU.ActiveCfg = Release|Any CPU
